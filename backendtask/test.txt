@@ -1,0 +1,2036 @@
+let Email1 = async (email, subject, text) => {
+    try {
+        //  let testAccount=await nodemailer.createTestAccount();
+        let transporter = nodemailer.createTransport({
+
+            service: "gmail",
+            port: 587,
+            auth: {
+                user: 'dheerajpaneru8@gmail.com',
+                pass: 'desddxcnozikppbv'
+            }
+
+        });
+         transporter.sendMail({
+            from:
+                "dheerajpaneru8@gmail.com",
+            to:
+                "panerudheeraj8@gmail.com",
+            subject: subject,
+            text: text
+        });
+        console.log("sent successfully");
+    }
+    catch (error) {
+        console.log("error in email");
+    }
+}
+
+
+import mysql from "mysql"
+import express from "express"
+import cors from "cors"
+import multer from "multer";
+import bodyparser from "body-parser"
+import fetch from "node-fetch"
+import jwt from "jsonwebtoken"
+import { initClient } from "messagebird"
+import bcrypt from "bcrypt"
+//import Email1 from "./Email.js"
+//YRvT31Q1REDqFeW1
+//mongodb+srv://dheerajpaneru8:<YRvT31Q1REDqFeW1>@cluster0.y7lqa00.mongodb.net/taskusers
+import crypto from "crypto"
+import nodemailer from "nodemailer"
+import { trusted } from "mongoose";
+import cookieParser from "cookie-parser";
+import { ok } from "assert";
+import mongoose from "mongoose";
+//import userSignup from "./userService.js";
+
+//const mysql=require("mysql")
+//const cors=require('cors')
+//mysql connection
+let db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "users"
+});
+let app = express()
+app.use(cors())
+app.use(bodyparser.json())
+app.use(express.json())
+
+
+//app.use(email)
+//var jwt =require('jsonwebtoken')
+//var upload = multer();
+const messagebird = initClient('<YOUR_ACCESS_KEY>');
+//require("dotenv").config();
+//db.connect((err) => {
+ //   if (err) {
+ //       console.log("error");
+ //   }
+ //   else {
+ //       console.log("connected");
+ //   }
+//})
+
+
+//const mongoose = require('mongoose');
+//require('./corn')
+//const express=require('express')
+
+app.use(bodyparser.urlencoded({ extended: true }))
+
+//app.get("/",(req,res)=>{
+//  res.json("hello backend")
+//})
+//app.use(Email1)
+const port = process.env.PORT || 8000;
+const jwtkey = "dheeraj";
+//app.use(upload.array());
+//image sorted
+app.listen(port, () => {
+    console.log(` hi dheeraj running  backend,${port}`);
+
+})
+var img = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, "./uploads")
+    },
+    filename: (req, file, callback) => {
+        callback(null, `image-${Date.now()}.${file.originalname}`)
+    }
+});
+
+//img filter
+
+
+//app.post('/create', upload.array("products", 3), (req, res) => {
+
+// const x = req.files;
+// res.send(x)
+// console.log(req.body.calss);
+// console.log(x);
+
+
+// const r ="INSERT INTO utable1 (photo)";
+//  console.log(r,"ui");
+//})
+//app.use(cors({ origin:"*",methods:["POST","GET"], credentials:true}))
+//app.use(cookieParser())
+
+mongoose.set("strictQuery", false);
+
+ function check(){ 
+mongoose.connect('mongodb://127.0.0.1:27017/5678')
+   console.log(' Connected!');
+}
+check()
+
+
+//mongoose
+
+const testSchema=new mongoose.Schema({
+    email:String,
+    password:String
+})
+
+const User = mongoose.model("users",testSchema)
+
+app.post("/testmongodb",async(req,res)=>{
+    try{
+   // console.log(req)
+    let user=new User();
+   //  await User.insertMany(req.body)
+    user.email=req.body.user.email;
+    user.password=req.body.user.password
+     const doc =await user.save()
+     console.log(doc)
+    }
+    catch(err){
+        console.log(err)
+    }
+   // console.log(req)
+    
+})
+app.get("/testmongodb89",async(req,res)=>{
+    try{
+  const x= await  User.find({})
+   res.send(x)
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+//test api
+const isimg = (req, file, callback) => {
+    if (file.mimetype.startsWith("image")) {
+        callback(null, true)
+    }
+    else {
+        callback(null, Error("only image is allowed"))
+    }
+}
+var upload = multer({
+    storage: img,
+    fileFilter: isimg
+})
+app.use("/uploads", express.static("./uploads"))
+
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=email],input[type=password],input[type=text],input[type=int] ,select,input[type=number]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+h2{
+  align-items: center;
+  display: flex;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.9rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  justify-content: center;
+}
+button {
+  background-color: #04AA6D;
+  color: rgb(19, 4, 4);
+  font-size: 1.35rem;
+  font-weight: 600;
+  
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.6;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar{
+  width: 25%;
+  height: 25%;
+  border-radius: 50%;
+  
+}
+img.avatar1{
+  width:100px;
+  height:100px;
+}
+img.avatar2{
+  width:30px;
+  display: flex;
+  height:30px;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+input.disable4{
+
+  width: 100%;
+}
+.header,.header3 {
+  overflow: hidden;
+  background-color: #0d0202;
+  padding: 9px 10px;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header a ,.header3 a{
+  float: left;
+  color: rgb(6, 253, 253);
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: dodgerblue;
+  color: white;
+
+}
+.header3 a:hover {
+  background-color: dodgerblue;
+  color: white;
+
+}
+
+.header-right,.header-right3{
+  float: right;
+}
+
+@media screen and (max-width: 11500px) {
+
+}
+footer {
+  background-color: #121315;
+  color: #a7a7a7;
+  font-size: 16px;
+}
+footer * {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+.row {
+  padding: 1em 1em;
+}
+.row.primary {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
+  align-items: stretch;
+}
+.column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  min-height: 15em;
+}
+h3 {
+  width: 100%;
+  text-align: left;
+  color: white;
+  font-size: 1.4em;
+  white-space: nowrap;
+}
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+li:not(:first-child) {
+  margin-top: 0.8em;
+}
+ul li a {
+  color: #a7a7a7;
+  text-decoration: none;
+}
+ul li a:hover {
+  color: #2a8ded;
+}
+.about p {
+  text-align: justify;
+  line-height: 2;
+  margin: 0;
+}
+input,
+button {
+  font-size: 1em;
+  padding: 1em;
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+button {
+  background-color: #c7940a;
+  color: #ffffff;
+}
+div.social {
+  display: flex;
+  justify-content: space-around;
+  font-size: 2.4em;
+  flex-direction: row;
+  margin-top: 0.5em;
+}
+.social i {
+  color: #bac6d9;
+}
+
+.copyright {
+  padding: 0.3em 1em;
+  background-color: #25262e;
+}
+.footer-menu{
+  float: left;
+    margin-top: 10px;
+}
+
+.footer-menu a{
+  color: #cfd2d6;
+  padding: 6px;
+
+  text-decoration: none;
+}
+.footer-menu a:hover{
+  color: #27bcda;
+}
+.copyright p {
+  font-size: 0.9em;
+  text-align: right;
+}
+@media screen and (max-width: 850px) {
+  .row.primary {
+    grid-template-columns: 1fr;
+  }
+
+}
+img.logophoto{
+  border-radius: 50%;
+}
+.biouser{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+img.erty1{
+  margin:-2.5px;
+}
+img.wert{
+  margin:-3px;
+}
+.header1{
+  width: 60%;
+  right: 0px;
+  top: 0px;
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  margin: 1px;
+  padding: 8px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background-color: #0d0202;
+}
+.header-right1{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+color: aqua;
+  justify-content: space-between;
+}
+.header1 a{
+color: aqua;
+font-size: 18px;
+line-height: 25px;
+padding: 10px;
+  border-radius: 4px;
+text-decoration: none;
+}
+.header1 a:hover {
+  background-color: dodgerblue;
+  color: white;
+
+}
+@media screen and (max-width:950px)
+{
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+img.ghyu
+  {
+    width: 60px;
+    cursor: pointer;
+  }
+
+}
+@media screen and (min-width: 950px) {
+  .ghyu{
+    display: none;
+  }
+  .header1{
+    display:none;
+  }
+
+}
+img.fitcontent{
+height: 220px;
+object-fit: contain;
+}
+
+.cartbox
+{
+display: flex;
+padding: 12px;
+min-width: 300px;
+flex-direction: row;
+flex-wrap: wrap;
+margin: 12px;
+align-items: center;
+justify-content: center;
+box-sizing: border-box;
+background-color: #0e0404;
+}
+.carditem{
+  flex-grow: 1;
+  padding: 3px;
+  min-width: 260px;
+  max-width: 270px;
+  margin: 8px;
+  height: 330px;
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cardimage{
+  display: flex;
+}
+.cardimage img{
+width:100%;
+height: auto;
+}
+.productname{
+  display: flex;
+  align-items: center;
+  color: rgb(0, 207, 62);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.2rem;
+}
+.priceitem{
+  color: #0d0202;
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-style: normal;
+
+}
+.xcv{
+  width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+
+}
+h3,.pricreofproduct{
+  color: rgb(226, 43, 43);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.2rem;
+}
+.sub,.Add
+{
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cfd2d6;
+  border-radius: 50%;
+  height: 32px;
+  cursor: pointer;
+  color: blueviolet;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.2rem;
+}
+.sub :hover{
+background-color: grey;
+}
+.add :hover{
+  background-color: grey;
+}
+.reviewbox{
+  display: flex;
+  flex-direction: column;
+  padding-top: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
+  max-width:250px;
+  border: 2px solid rgb(235, 184, 184);
+  border-radius: 2px;
+}
+h6{
+  color: rgb(226, 43, 150);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+.rating{
+  display: flex;
+  flex-direction: column;
+}
+.aboutproduct,.productreviewbox{
+  display: flex;
+  flex-direction: column;
+  color: #0e0404;
+  font-size: 1.2rem;
+  font-weight:300;
+}
+.revieshowbox{
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  max-width: 210px;
+  height: auto;
+  margin: 3px;
+  background-color: #0c0404;
+  border: 1px solid rgb(155, 231, 13);
+}
+.imageshowbox{
+  display: flex;
+  padding-left: 1px;
+  border-radius:2px;
+}
+.imageshowbox img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.ratingbox{
+  display: flex;
+  flex-direction: row;
+}
+
+.boxproductdetail{
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
+  margin: 4px;
+  flex-wrap: wrap;
+}
+.cardsofproduct{
+  display: flex;
+  width: 70%;
+}
+.productfunction{
+  padding-top:50px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.plusminus{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.aboutproductdetail{
+  display: flex;
+  color: black;
+  flex-direction: column;
+  font-weight: 300;
+  font-style: italic;
+}
+.reviwdataenterbox{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.erfvghj{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 4px;
+  padding: 4px;
+}
+.contentaboutproduct
+{
+  padding-left: 1.6px;
+  color: #FFF;
+  font-weight: 300;
+  height: auto;
+  font-style: italic;
+  font-size: 1rem;
+  word-break: break-all;
+}
+.productreviewbox{
+  height: auto;
+}
+.reviewbutton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buttonbox{
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
+  margin: 4px;
+  align-items: center;
+  justify-content: center;
+}
+button.buttonmpage{
+  height: 45px;
+  text-align: center;
+  margin: 1px;
+  font-size: 0.8rem;
+  font-weight: 200;
+  flex-grow: 1;
+  min-width: 55px;
+  max-width: 90px;
+  font-style: italic;
+  border: 1px solid #bac6d9;
+}
+input.inputboxsearch{
+  width: 40%;
+  min-width: 135px;
+}
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: white;
+	color: black;
+	font-family: "Fira Sans", sans-serif;
+	background-color: white;
+}
+
+nav {
+	width: 100%;
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px 5%;
+	background-color: #8cc099;
+}
+
+nav .heading {
+	font-size: 30px;
+	font-weight: 700;
+	color: white;
+}
+
+nav ul {
+	display: flex;
+	list-style: none;
+}
+
+nav ul li {
+	padding: 8px 15px;
+	border-radius: 10px;
+	transition: 0.2s ease-in;
+}
+
+nav ul li a {
+	color: black;
+	font-size: 20px;
+	font-weight: 500;
+	text-decoration: none;
+	color: white;
+}
+
+nav ul li:hover {
+	background-color: green;
+}
+
+nav ul li a:hover {
+	color: white;
+}
+
+nav .sideMenuButton {
+	font-size: 30px;
+	font-weight: bolder;
+	cursor: pointer;
+	display: none;
+}
+
+/* responsive navbar css */
+@media screen and (max-width: 600px) {
+	nav .sideMenuButton {
+		display: flex;
+	}
+
+	nav .navbar {
+		display: none;
+	}
+
+	.sideNavigationBar {
+		display: block !important;
+	}
+}
+
+.sideNavigationBar {
+	height: 100%;
+	position: fixed;
+	top: 0;
+	right: 0%;
+	background-color: green;
+	overflow-x: hidden;
+	transition: 0.3s ease-in;
+	padding-top: 60px;
+	display: none;
+}
+
+.sideNavigationBar a {
+	padding: 8px 8px 8px 40px;
+	display: block;
+	font-size: 25px;
+	font-weight: 500;
+	color: #d1d1d1;
+	transition: 0.3s;
+	text-decoration: none;
+}
+
+.sideNavigationBar a button {
+	padding: 10px 20px;
+	border-radius: 10px;
+	color: green;
+	font-size: 16px;
+	border-style: none;
+	font-weight: 700;
+}
+
+.sideNavigationBar a:hover {
+	color: white;
+}
+
+.sideNavigationBar .closeButton {
+	position: absolute;
+	top: 10px;
+	right: 25px;
+	font-size: 20px;
+	margin-left: 50px;
+}
+
+.line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2% 5%;
+}
+
+.line .side1 {
+	padding-right: 50px;
+}
+
+.side1 h1 {
+	font-size: 60px;
+	margin-bottom: 10px;
+	color: green;
+}
+
+.side1 button {
+	width: 200px;
+	padding: 12px 20px;
+	border-radius: 20px;
+	border-style: none;
+	color: black;
+	font-size: 17px;
+	font-weight: 600;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+/* Header content responsive */
+@media screen and (max-width: 980px) {
+	.side2 img {
+		width: 350px;
+	}
+
+	.side1 h1 {
+		font-size: 40px;
+	}
+
+	.side1 p {
+		font-size: 17px;
+	}
+
+	.line {
+		margin-top: 80px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.side1 h1 {
+		font-size: 35px;
+	}
+
+	.line {
+		flex-direction: column;
+	}
+
+	.line .side1 {
+		padding: 30px;
+	}
+}
+
+/* section */
+
+section .topic a {
+	font-size: 25px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.about .boxes {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.about .boxes .box {
+	margin: 10px 20px;
+	max-width: calc(100% / 3 - 50px);
+	text-align: center;
+	border-radius: 12px;
+	padding: 30px 10px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+	cursor: default;
+}
+
+/* Contact Page */
+
+.contact {
+	padding: 20px;
+}
+
+.contact .content {
+	margin: 0 auto;
+	padding: 30px 0;
+}
+
+.content .title {
+	width: 80%;
+	text-align: center;
+	font-weight: bolder;
+	font-size: 40px;
+}
+
+.title {
+	margin-bottom: 30px;
+	margin-left: 80px;
+}
+
+.contactMenu {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.input2 {
+	margin-top: 10;
+}
+
+.label1 {
+	font-size: 18px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	font-weight: bolder;
+}
+
+.contactMenu .input1 input {
+	border-radius: 13px;
+	padding: 6px;
+}
+
+.input2 input {
+	border-color: rgb(252, 244, 244);
+	width: 400px;
+}
+
+.button {
+	margin-top: 12px;
+	margin-left: 5px;
+}
+
+.button button {
+	width: 162px;
+	height: 35px;
+	border-radius: 12px;
+	border-color: transparent;
+}
+
+.button button:hover {
+	background-color: #8cc099;
+}
+
+button {
+	width: 162px;
+	height: 35px;
+	border-radius: 12px;
+	border-color: transparent;
+}
+
+button:hover {
+	background-color: #8cc099;
+}
+
+.rightside1 {
+	display: flex;
+	flex-direction: column;
+	margin-left: 300px;
+}
+
+.title1 {
+	font-size: 18px;
+	margin-top: 8px;
+	margin-bottom: 5px;
+	font-weight: bolder;
+}
+
+.content1 {
+	width: 450px;
+	margin-top: 2px;
+	color: grey;
+}
+
+/* Footer */
+footer {
+	background: var(--primary-color);
+	padding: 15px 0;
+	text-align: center;
+	font-family: "Poppins", sans-serif;
+}
+
+footer .footer span {
+	font-size: 17px;
+	font-weight: 400;
+	color: var(--white-color);
+}
+
+footer .footer span a {
+	font-weight: 500;
+	color: var(--white-color);
+}
+
+footer .footer span a:hover {
+	text-decoration: underline;
+}
+
+@media screen and (max-width: 1060px) {
+	.contactMenu {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.rightside1 {
+		display: flex;
+		flex-direction: column;
+		margin-left: 0px;
+	}
+
+	.content1 {
+		width: 100%;
+		margin-top: 2px;
+		color: grey;
+	}
+
+	.side2 img {
+		width: 95%;
+		height: 90%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.side2 img {
+		width: 100%;
+	}
+
+	section .topic a {
+		font-size: 20px;
+	}
+
+	section .topic p {
+		font-size: 5px;
+	}
+
+	.about .boxes {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.about .boxes .box {
+		max-width: 70%;
+	}
+}
+
+button.numberbox{
+  min-width: 25px;
+  max-width: 75px;
+  background-color: #ccc;
+  border: 1px solid aqua;
+  color: #0d0202;
+  font-size: 0.8rem;
+  display: flex;
+  flex-grow: 1;
+  height: 45px;
+  margin: 1px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.numberbox.color{
+  background-color: rgb(0, 255, 51);
+}
+
+.filterboxsystem{
+  margin: 2px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.searchsystem{
+  width: 100%;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchbox{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filtesanddata{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.filtersystem{
+  width: 35%;
+  height: auto;
+  margin: 2px;
+margin-left:0;
+}
+.filterdata{
+ width: 60%;
+ margin: 2px;
+ height: auto;
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ background-color: #eae2e2;
+}
+p{
+  color: #0c0404;
+  font-size: 0.8rem;
+  display:flex;
+  flex-direction: row;
+  align-content: center;
+  font-weight: 700;
+
+}
+.cvfgty{
+  width: 90%;
+height: 90%;
+}
+p.vcfgh{
+  color: #0c0404;
+  font-size: 0.8rem;
+  display:flex;
+  align-items: center;
+  justify-content: start;
+}
+input.wert{
+  padding: 0.6em;
+  width: 56px;
+}
+input.wert1{
+  padding: 0.6em;
+  width: 30px;
+}
+
+.erty8n{
+  display: flex;
+flex-direction:column;
+height:auto;
+}
+.colorsty{
+max-width: 60px;
+min-width: 30px;
+min-height: 30px;
+  max-height: 40px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 1px solid gray;
+  background-color: #f44336;
+}
+.colorsboxpickup{
+  display: flex;
+}
+.filterboxsystem{
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  gap: 8px;
+}
+.sizebox{
+  display: flex;
+  flex-direction: row;
+}
+h6{
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+span.cer{
+margin-bottom: 5px;
+}
+.roundcircle{
+  border:  4px solid rgb(251, 214, 5);
+}
+button{
+  width: 100%;
+  height: 100%;
+}
+img{
+  width: 100%;
+  height: 180px;
+}
+.bogbox{
+  width: 270px;
+  align-items: center;
+padding: 5px;
+margin: 10px;
+border: 2px solid black;
+}
+.container1{
+  align-items: center;
+  justify-content: center;
+}
+p{
+  color: #04AA6D;
+  font-size: 1.2rem;
+  display: flex;
+  line-break: anywhere;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    font-family: arial;
+    justify-content: center;
+    flex:1 1 1;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .card button:hover {
+    opacity: 0.7;
+  }
+  .container1{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+  }
+  //backend
+  app.post('/login', (req, res) => {
+    let { password } = req.body;
+    let { email } = req.body;
+
+    db.query("SELECT * FROM utable4 WHERE email=?", [email], async (err, row, fields) => {
+        if (row.length) {
+            console.log(row[0].password, "check");
+            console.log(password);
+            let pm = await bcrypt.compare(password, row[0].password);
+            if (pm == true) {
+                console.log(pm);
+                const token = jwt.sign({ row }, jwtkey, { expiresIn: "365d" })
+                if (token.length) {
+                    //    res.cookie("userDt",token);
+                    //   console.log(cookie,"cookie");
+                    //  await res.send({ row, auth: token })
+                    console.log(token, "fgtyu");
+                    // res.cookie("TOKEN", token, { httpOnly: true });
+                    //   console.log(cookie,"op");
+                    res.status(206).send({ row, auth: token })
+                }
+                else {
+                    res.status(204)
+
+                }
+            }
+            else {
+                console.log("op");
+                res.status(201).send("password wrong")
+            }
+        }
+        else {
+            res.status(202).send("email is not valid")
+        }
+    })
+})
+
+//    jwt.sign({ rows }, jwtkey, { expiresIn: "2000s" }, (err, token) => {
+//   if (err) console.log("something wrong")
+//   else {
+//       console.log(8);
+//       res.send({ rows, auth: token })
+//      }
+//  })
+app.put('/user/put/:id', (req, res) => {
+    const { id } = req.params
+    const Name = req.body.name
+    const email = req.body.email
+    db.query('UPDATE  utable4  SET name=?,email=? WHERE id=?', [Name, email, id], (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.send(result)
+        }
+    })
+})
+app.get('/users', (req, res) => {
+    db.query('SELECT * FROM utable4', (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.send(result)
+        }
+    })
+})
+app.get('/detailuser/:id', (req, res) => {
+    const { id } = req.params
+    db.query('SELECT * FROM utable4 WHERE id=?', id, (err, result) => {
+        if (result) {
+            res.send(result)
+        }
+        else {
+            res.status(201)
+        }
+    })
+})
+app.delete('/usersx/delete/:id', (req, res) => {
+    const { id } = req.params;
+    db.query('DELETE FROM utable4 WHERE id=?', id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.send(result)
+        }
+    })
+})
+const middleware = (req, res, next) => {
+    const token = req.header
+    console.log("middleware")
+    next()
+}
+app.get("/search/:key", middleware, (req, res) => {
+    let { key } = req.params;
+    console.log(typeof key);
+    let a = key;
+    if (a) {
+        let x = `SELECT * FROM utable4 WHERE name LIKE ${JSON.stringify("%" + a + "%")} OR email LIKE ${JSON.stringify("%" + a + "%")}`
+        db.query(x, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(result)
+            }
+        })
+    }
+})
+app.post("/iuyoo", async (req, res) => {
+    try {
+        let i = req.body.token;
+        console.log(i);
+        if (i) {
+            console.log("xdfrt");
+
+            console.log(i);
+            jwt.verify(i, jwtkey, (err, info) => {
+                if (info) {
+                    res.send(info)
+                }
+                else {
+                    res.send("token expired")
+                    console.log(err);
+                }
+            });
+            //  console.log(q,"ytr")
+        }
+        //await Email1("verify email","http://localhost:8000")
+    }
+    catch (error) {
+        console.log(error, "ui");
+    }
+
+})
+
+
+//signup-------
+app.post("/signup", upload.single("photo"), async (req, res) => {
+    try {
+        let name = req.body.name;
+        let email = req.body.email;
+        let phone = req.body.phone;
+        let password = req.body.password;
+        let photo = req.file.filename;
+        const salt = await bcrypt.genSalt(16);
+        password = await bcrypt.hash(password, salt)
+        //very important
+        console.log(email);
+        let p = `SELECT * FROM utable4 WHERE email=?`
+        let z = `INSERT INTO utable4 (name,email,phone,password,photo) VALUES(?,?,?,?,?)`;
+        db.query(p, email, (err, result) => {
+            if (result.length>0) {
+                res.status(201).send("alredy register")
+            }
+            else if (result.length == 0) {
+                db.query(z, [name, email, phone, password, photo], (err, result) => {
+                    if (result) {
+                        console.log(result, "paneru");
+                        res.sendStatus(200)
+                    }
+                    else {
+                        res.send(err)
+                    }
+                })
+
+            }
+        })
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
+//sellproduct
+app.post("/sellproductdata", upload.array("photo"), (req, res) => {
+    try {
+        console.log(req, "dheeraj");
+        let Sellername = req.body.name;
+        let Product = req.body.Product;
+        let producttype = req.body.Category;
+        let price = req.body.Price;
+        let rating =req.body.rating;
+        let colors =req.body.colors;
+        let Brand =req.body.Brand;
+        let size =req.body.size;
+        let contentproduct = req.body.content;
+        let productqnty = req.body.productqnty;
+        let productphotos = JSON.stringify(req.files);
+        let seller_id = req.body.seller_id;
+        let z = `INSERT INTO utable5 (sellername,productname,price,producttype,contentproduct,productphotos,seller_id,productqnty) VALUES(?,?,?,?,?,?,?,?)`;
+        db.query(z, [Sellername, Product, price, producttype, contentproduct, productphotos, seller_id, productqnty], (err, result) => {
+            if (err) {
+                res.status(201).send("wrong")
+            }
+            else {
+                res.status(200).send("ok")
+
+
+            }
+        })
+    }
+    catch (err) {
+        res.send(err)
+    }
+
+
+})
+//no of cards
+app.get("/noofcards", (req, resp) => {
+    try {
+        let p = 'SELECT *FROM utable5';
+        db.query(p, (err, result) => {
+            if(result.length){
+                console.log(result);
+                resp.send(result)
+            }
+            else {
+                //      res.send(err)
+                console.log(err);
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+
+    }
+})
+//sell for registertation
+
+app.post("/sellregisteration", (req, res) => {
+    try {
+        console.log(req);
+        const p = req.body.email;
+        const o = "SELECT * FROM utable6 WHERE selleremail=?";
+        const x = "INSERT INTO utable6(selleremail) VALUES(?)";
+
+        db.query(o, [p], (err, result) => {
+            if (result.length > 0) {
+                res.status(201).send("register")
+            }
+            else {
+                db.query(x, [p], (err, result) => {
+                    if (err) {
+                        res.send("wrong")
+                    }
+                    else
+                        res.status(200).send("ok")
+                })
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+})
+
+//sell for login
+
+app.post("/loginregisteration", (req, res) => {
+    try {
+        console.log(req);
+        const p = req.body.email;
+        const x = "SELECT  * FROM utable6  WHERE selleremail=?";
+        db.query(x, [p], (err, result) => {
+            if (result.length > 0) {
+                res.status(200).send(result)
+            }
+            else
+                res.status(201).send("not register")
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+})
+
+
+//edit product detail
+
+app.get("/producteditdetail/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(req);
+        const p = req.body.email;
+        const x = "SELECT  * FROM utable5  WHERE product_id=?";
+        db.query(x, [id], (err, result) => {
+            if (result.length > 0) {
+                res.status(200).send(result)
+            }
+            else
+                res.status(201).send("not found")
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+})
+//update sell detail;
+app.put("/updatedetial1/:id", async (req, res) => {
+    console.log(req, 'uio');
+    let { id } = req.params
+    let Sellername = req.body.name;
+    let Product = req.body.Product;
+    let producttype = req.body.Category;
+    let price = req.body.Price;
+    let contentproduct = req.body.content;
+    let productqnty = req.body.productqnty;
+    try {
+        console.log(req, "dheeraj");
+        let y = `UPDATE utable5 SET  sellername =?,productname=?,price=?,producttype=?,contentproduct=?,productqnty=? WHERE product_id=?`;
+        db.query(y, [Sellername, Product, price, producttype, contentproduct, productqnty, id], (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.status(200).send("ok update")
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+//delete product 
+app.delete("/deleteproduct/:id", async (req, res) => {
+    console.log("yes");
+    let { id } = req.params;
+    try {
+        console.log(req, "dheeraj");
+        let y = `DELETE FROM utable5  WHERE product_id=?`;
+        db.query(y, [id], (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.status(200).send("ok delete")
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+//fetch user detail
+
+app.get("/edituserdetail/:id", (req, res) => {
+    console.log(req);
+    let { id } = req.params;
+    console.log(id);
+    const x = `SELECT * FROM utable4 where id=?`;
+    try {
+        db.query(x, [id], (err, result) => {
+            res.send(result)
+            if (err) {
+                console.log(err);
+            }
+        })
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+})
+
+//edit user detail
+
+app.put("/userupdatedetail/:id", upload.single('photo'), (req, res) => {
+    console.log(req, 'uio');
+    let { id } = req.params
+    let Sellername = req.body.name;
+    let email = req.body.email;
+    let phone = req.body.phone;
+    let photo = req.file.filename;
+    console.log(photo, "iog");
+    try {
+        let y = `UPDATE utable4 SET  name =?,email=?,phone=?,photo=? WHERE id=?`;
+        db.query(y, [Sellername, email, phone, photo, id], (err, result) => {
+            console.log(result);
+            if (result) {
+                res.status(200).send("updated user sucessfully")
+            }
+            else {
+                res.status(201).send("not valid detail")
+            }
+        })
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
+
+//verify  user email;
+app.post("/useremailverify", (req, res) => {
+    let { email } = req.body;
+
+    try {
+        db.query("SELECT * FROM utable4 WHERE email=?", [email], (err, result) => {
+            if (result.length > 0) {
+                //token generate
+                const token = jwt.sign({ result }, jwtkey)
+
+                res.status(200).send({ email, auth: token })
+
+
+            }
+            else if (result.length == 0) {
+                res.status(201).send("email is not valid")
+            }
+            else {
+                console.log(err);
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+//verify otp email
+app.post("/emailotp", (req, res) => {
+    let { email, otp } = req.body;
+    console.log(req);
+    console.log(email);
+    let result = {
+        a: "dheeraj"
+    }
+    const token = jwt.sign({ result }, jwtkey)
+    let transporter = nodemailer.createTransport({
+
+        service: "gmail",
+        port: 587,
+        auth: {
+            user: 'dheerajpaneru8@gmail.com',
+            pass: 'desddxcnozikppbv'
+        }
+
+    });
+    transporter.sendMail({
+        from:
+            "dheerajpaneru8@gmail.com",
+        to: `${email}`,
+        subject: "otp verification",
+        text: `${otp}`,
+    }, (error, info) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            console.log(info);
+        }
+    });
+    res.send(token)
+
+})
+//password update
+app.post("/passwordupdate", async (req, res) => {
+    console.log(req, "op");
+    let { email, password } = req.body;
+    const salt = await bcrypt.genSalt(16);
+    password = await bcrypt.hash(password, salt)
+    let y = `UPDATE utable4 SET password=? WHERE email=?`;
+    db.query(y, [password, email], (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.status(200).send("ok")
+
+        }
+    })
+})
+//add to cart api
+app.post("/addtocartapi/:product_id", (req, res) => {
+    const { product_id, productqnty } = req.body;
+
+    let x = `SELECT * FROM utable4 WHERE product_id=?`;
+    let z = `INSERT INTO utable7 (product_id,user_id,productdetail,productquantity,shiped) VALUES(?,?,?,?,?)`;
+    let up = `SELECT * FROM utable7 WHERE product_id=? AND user_id=? AND shiped=?`;
+    let update = `UPDATE utable7 SET productquantity=? WHERE  product_id=? AND user_id=?`
+    let delte = `DELETE FROM utable7 WHERE product_id=? AND user_id=?`
+    db.query(x, [product_id], (err, result) => {
+        if (err) {
+            res.status(201).send("error")
+        }
+        else {
+            db.query(up, [product_id, seller_id, NO], (err, result) => {
+                if (result.length > 0) {
+                    if (productqnty > 1) {
+                        db.query(update, ["", product_id, seller_id], (err, result) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                console.log(result);
+                            }
+                        })
+                    }
+                    else if (productqnty == 1) {
+                        db.query(z, ["", product_id, seller_id, productdetail], (err, result) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                console.log(result);
+                            }
+                        })
+                    }
+                    else {
+                        db.query(delte, [product_id, seller_id], (err, result) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                console.log(result)
+                            }
+                        })
+                    }
+                }
+                else {
+                    db.query(z, [NO], (err, result) => {
+
+                    })
+                }
+            })
+            //  res.status(200).send(result)
+        }
+    })
+    console.log();
+
+})
+
+app.post("/addproducttocart", (req, res) => {
+    try {
+        console.log(req, "cki");
+        let product_id = req.body.product.product_id;
+        let price = req.body.product.price;
+        let photos = req.body.product.productphotos;
+        let user_id = req.body.user_id;
+        let productdetail = req.body.product.contentproduct;
+        let Totalproductnumbers = req.body.product.productqnty;
+        let z = `INSERT INTO utable8 (productuser_id,buyer_id,aboutproduct,productquntity,shiped,price,photos,Totalproductnumbers) VALUES(?,?,?,?,?,?,?,?)`;
+        let check = `SELECT * FROM utable8 WHERE productuser_id=? AND buyer_id=? AND shiped=?`;
+        db.query(check, [product_id, user_id, "no"], (err, result) => {
+            if (err) {
+                res.status(201).send("error")
+            }
+            else if (result.length > 0) {
+                console.log(result, "dfg");
+                let u = `UPDATE utable8 SET productquntity=? WHERE productuser_id=? AND buyer_id=? AND shiped=?`;
+                db.query(u, [parseInt(result[0].productquntity) + 1, product_id, user_id, "no"], (err, result) => {
+                    if (err) {
+                        console.log(err, "qwe");
+                        res.status(201).send("wrong")
+
+                    }
+                    else {
+                        res.status(200).send("ok")
+                    }
+                })
+
+
+            }
+
+            else if (result.length == 0) {
+
+                let z = `INSERT INTO utable8 (productuser_id,buyer_id,aboutproduct,productquntity,shiped,price,photos,Totalproductnumbers) VALUES(?,?,?,?,?,?,?,?)`;
+                db.query(z, [product_id, user_id, productdetail, 1, "no", price, photos, Totalproductnumbers], (err, result) => {
+                    if (err) {
+                        console.log(err, "qwe");
+                        res.status(201).send("wrong")
+                    }
+                    else {
+                        res.status(200).send("ok")
+                    }
+                })
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
+app.get("/addtocartproducts/:id", (req, res) => {
+    console.log(req);
+    const { id } = req.params;
+    let x = `SELECT * FROM utable8 WHERE buyer_id=? AND shiped=?`;
+    db.query(x, [id, "no"], (err, result) => {
+        if (err) {
+            res.status(201).send("error")
+        }
+        else {
+            res.status(200).send(result)
+        }
+    })
+})
+
+app.get("/addtocartproductsincreasedecrease/:id/:pid/:sign", (req, res) => {
+    console.log(req, "hui");
+    const { id, pid, sign } = req.params;
+    let x = `SELECT * FROM utable8 WHERE buyer_id=? AND productuser_id=? AND shiped=?`;
+    let y = `UPDATE utable8 SET productquntity=? WHERE buyer_id=? AND productuser_id=? AND shiped=?`;
+    let deletet = `DELETE FROM utable8 WHERE productuser_id=? AND buyer_id=? AND shiped=?`
+    db.query(x, [id, pid, "no"], (err, result) => {
+        if (err) {
+            res.status(201).send("error")
+        }
+        else if (result.length > 0) {
+            if (sign == "+") {
+                const productquantity = result[0].productquntity;
+                db.query(y, [parseInt(productquantity) + 1, id, pid, "no"], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        //      console.log(result);
+                    }
+                })
+                //   console.log(result);
+                //const productquantity=result.
+
+                res.status(200).send(result)
+            }
+            else {
+                const productquantity = result[0].productquntity;
+                if (productquantity > 1) {
+                    db.query(y, [parseInt(productquantity) - 1, id, pid, "no"], (err, result) => {
+
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            console.log("update");
+                        }
+                    })
+                    //   console.log(result);
+                    //const productquantity=result.
+                    res.status(200).send(result)
+                }
+                else if (productquantity == 1) {
+                    db.query(deletet, [pid, id, "no"], (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.status(200).send("sucessfuly deleted")
+                        }
+                    })
+                }
+            }
+        }
+    })
+
+})
+
+//productreview
+app.post("/productreview", (req, res) => {
+    console.log(req, "review");
+    const rating = req.body.rating;
+    const productreview = req.body.productreview
+    const photo = req.body.photo;
+    const productid = req.body.product_id;
+    const user_id = req.body.user_id;
+    let check = `SELECT * FROM utable9 WHERE product_id=? AND user_id=?`;
+    let z = `INSERT INTO utable9 (product_id,user_id,reviewcontent,photourl,rating) VALUES(?,?,?,?,?)`;
+    let update = `UPDATE utable9 SET rating=? ,reviewcontent=? WHERE  product_id=? AND user_id=?`
+    db.query(check, [productid, user_id], (err, result) => {
+        if (result.length > 0) {
+
+            db.query(update, [rating, productreview, productid, user_id], (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.send({ status: 200, data: result })
+                }
+            })
+
+        }
+        else if (result.length == 0) {
+            db.query(z, [productid, user_id, productreview, photo, rating], (err, result) => {
+                if (err) {
+                    res.status(201).send("some error")
+                }
+                else {
+                    res.status(200).send("ok")
+                }
+            })
+        }
+
+
+    })
+})
+//api review user
+app.get("/reviewuserfind/:id/:pid", (req, res) => {
+    const { id, pid } = req.params;
+    console.log(req);
+    try {
+        let check = `SELECT * FROM utable9 WHERE product_id=? AND user_id=?`;
+        db.query(check, [pid, id], (err, result) => {
+            if (result.length > 0) {
+                res.status(200).send({ status: 200, rd: result })
+            }
+            else if (result.length == 0) {
+                res.status(201).send({ status: 201, rd: "no" })
+            }
+            else {
+                console.log(err);
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+)
+//fetchuserreviewsaboutproduct
+
+app.get("/fetchuserreview/:id/:pid",(req,res)=>{
+    console.log(req);
+const product_id=req.params.pid
+const user_id=req.params.id
+    try{
+        let check = `SELECT * FROM utable9 WHERE product_id=?`;
+        db.query(check,[product_id],(err,result)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send(result).status(201)
+            }
+        })
+    }
+    catch(err){
+console.log(err);
+    }
+})
